@@ -1,0 +1,25 @@
+---
+
+global:
+
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+ - job_name: 'prometheus'
+   scrape_interval: 10s
+   static_configs:
+      - targets:
+        - 'localost:9090'
+
+  - job_name: 'node-exporter'
+    scrape_interval: 10s
+    honor_labels: true
+    metrics_path: 'metrics'
+    params:
+      'match[]':
+        - '{job="prometheus"}'
+        - '{job="node"}'
+
+    static_configs:
+      - targets:
+        - 'localost:9100'
