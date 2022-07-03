@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+
+  roles:
+    - role: docker-compose
+      tags: docker_compose_install
+
+    - role: prometheus-server 
+      tags: prometheus_server_install

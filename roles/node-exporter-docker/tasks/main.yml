@@ -1,0 +1,22 @@
+---
+  - name: create docker-compose configuration folder
+    ansible.builtin.file:
+      path: '/var/admin'
+      state: directory
+      owner: 'root'
+      group: 'root'
+      
+  - name: create docker-compose file
+    ansible.builtin.template:
+      src: 'docker-compose.yml'
+      dest: '/var/admin'
+      owner: 'root'
+      group: 'root'
+      mode: '0644'
+      backup: yes
+
+  - name: start docker-compose service
+    ansible.builtin.shell: 
+      cmd: 'docker-compose -f docker-compose.yml up -d'
+      chdir: '/var/admin'
+    tags: docker_compose_start

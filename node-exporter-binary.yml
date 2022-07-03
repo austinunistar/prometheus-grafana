@@ -1,0 +1,8 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+
+  roles:
+    - role: node-exporter-binary
+      tags: node_exporter_binary_install

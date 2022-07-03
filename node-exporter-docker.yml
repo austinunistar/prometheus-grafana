@@ -1,0 +1,11 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: true
+
+  roles:
+    - role: docker-compose
+      tags: docker_compose_install
+
+    - role: node-exporter-docker 
+      tags: node_exporter_docker_install
