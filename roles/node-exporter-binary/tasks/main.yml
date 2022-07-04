@@ -1,14 +1,38 @@
 ---
-  - name: apt update
+  - name: download and extra node exporter bianry
+    ansible.builtin.unarchive:
+      src: 'https://github.com/prometheus/node_exporter/releases/download/v0.18.1/node_exporter-0.18.1.linux-amd64.tar.gz'
+      dest: '/tmp'
+      owner: 'root'
+      group: 'root'
+      remote_src: yes
+    register: package_download
+    until: package_download is succeeded
+
+  - name: move the node export binary to /usr/local/bin
     ansible.builtin.shell: |
-            apt update
+            mv /tmp/node_exporter-0.18.1.linux-amd64/node_exporter /usr/local/bin/
+    ignore_errors: yes
 
-  - name: update all packages to their latest version
-    ansible.builtin.apt:
-      name: "*"
-      state: latest
+  - name: create a node_exporter user to run the node exporter service
+    ansible.builtin.shell: |
+            useradd -rs /bin/false node_exporter
 
-  - name: install prometheus-node-exporter package
-    ansible.builtin.apt:
-      name: 'prometheus-node-exporter'
-      state: present
+  - name: create a node_exporter service file under systemd
+    ansible.builtin.template:
+      src: 'node_exporter.service.j2'
+      dest: '/etc/systemd/system/node_exporter.service'
+      owner: 'root'
+      group: 'root'
+      mode: '0644'
+      backup: yes
+
+  - name: reload the system daemon
+    ansible.builtin.systemd:
+      daemon_reload: yes
+
+  - name: start and enable the node exporter service
+    ansible.builtin.systemd:
+      name: node_exporter
+      state: started
+      enabled: yes
