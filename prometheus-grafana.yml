@@ -1,8 +1,8 @@
 ---
 - hosts: all
   gather_facts: yes
-  become: true
-
+  become_method: sudo
+  become: yes
   roles:
     - role: docker-compose
       tags: docker_compose_install

@@ -10,8 +10,8 @@
     ansible.builtin.file:
       path: "{{ item }}"
       state: directory
-      owner: 'root'
-      group: 'root'
+      owner: 'nobody'
+      group: 'nogroup'
     loop: 
       - /var/admin/prometheus-grafana/grafana
       - /var/admin/prometheus-grafana/grafana/provisioning

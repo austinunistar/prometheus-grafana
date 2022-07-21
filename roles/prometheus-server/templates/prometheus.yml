@@ -13,6 +13,6 @@ scrape_configs:
     scrape_interval: 10s
     static_configs:
       - targets:
-        - '192.168.56.11:9100'
-        - '192.168.56.13:9100'
-        - '192.168.56.14:9100'
+        - 'sv2a-devb7:9100'
+        - 'sv2a-devb8:9100'
+        - 'sv2a-devb9:9100'

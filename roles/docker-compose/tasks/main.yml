@@ -1,12 +1,12 @@
 ---
-  - name: apt update
-    ansible.builtin.shell: |
-            apt update
+#  - name: apt update
+#    ansible.builtin.shell: |
+#            apt update
 
-  - name: update all packages to their latest version
-    ansible.builtin.apt:
-      name: "*"
-      state: latest
+#  - name: update all packages to their latest version
+#    ansible.builtin.apt:
+#      name: "*"
+#      state: latest
 
   - name: install a few prerequisite packages
     ansible.builtin.apt:
